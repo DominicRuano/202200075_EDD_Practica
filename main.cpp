@@ -1,5 +1,6 @@
 #include <iostream>
-#include "./Objects/nodo.h"
+#include "./Structs/CircularDoublyLinkedList.h"
+#include "./Objects/avion.h"
 #include <limits>
 #include <fstream>
 #include "./librerias/json.hpp"
@@ -10,11 +11,13 @@ using json = nlohmann::json;
 /* Funcion que despliega el menu principal. */
 int Menu();
 /* Funcion que lee un json. */
-void ReadJson();
+void ReadJson(CircularDoublyLinkedList<avion> &listaAviones,CircularDoublyLinkedList<avion> &listaAviones2);
 
 int main(){
     int input; // Guarda el valor seleccionado por el usuario.
     int stop;
+    CircularDoublyLinkedList<avion> listaAvionesDisponibles;
+    CircularDoublyLinkedList<avion> listaAvionesMantenimiento;
     while (input != 6){
         Menu();
         cin >> input;
@@ -46,8 +49,11 @@ int main(){
             break;
         case 6:
             cout << "Se selecciono 6." << endl;
-            ReadJson();
-            // Funcion aqui.
+            ReadJson(listaAvionesDisponibles,listaAvionesMantenimiento);
+            cout << "\n - Lista de Aviones En mantenimiento: " << endl;
+            listaAvionesMantenimiento.print();
+            cout << "\n - Lista de Aviones Disponibles: " << endl;
+            listaAvionesDisponibles.print();
             break;
         default:
             // Funcion aqui.
@@ -57,7 +63,7 @@ int main(){
     return 0;
 }
 
-void ReadJson(){
+void ReadJson(CircularDoublyLinkedList<avion> &listaAviones,CircularDoublyLinkedList<avion> &listaAviones2){
     string filePath = "./ArchivosEntrada/Aviones.json"; // Ruta del archivo JSON
 
     // Leer el archivo JSON
@@ -72,18 +78,12 @@ void ReadJson(){
 
     // Acceder a los datos
     for (const auto& item : jsonData) { // Cambiar todo esto por una append a la estructura.
-        std::cout << "Vuelo: " << item["vuelo"] << std::endl;
-        std::cout << "Numero de Registro: " << item["numero_de_registro"] << std::endl;
-        std::cout << "Modelo: " << item["modelo"] << std::endl;
-        std::cout << "Fabricante: " << item["fabricante"] << std::endl;
-        std::cout << "Ano de Fabricacion: " << item["ano_fabricacion"] << std::endl;
-        std::cout << "Capacidad: " << item["capacidad"] << std::endl;
-        std::cout << "Peso Max Despegue: " << item["peso_max_despegue"] << std::endl;
-        std::cout << "Aerolinea: " << item["aerolinea"] << std::endl;
-        std::cout << "Estado: " << item["estado"] << std::endl;
-        std::cout << "---------------------------" << std::endl;
+        avion avionActual(item["vuelo"], item["numero_de_registro"], item["modelo"], item["fabricante"], item["ano_fabricacion"], item["capacidad"], item["peso_max_despegue"], item["aerolinea"], item["estado"]);
+        if (item["estado"] == "Disponible")
+            listaAviones.insert(avionActual);
+        else
+            listaAviones2.insert(avionActual);
     }
-
 }
 
 int Menu(){
