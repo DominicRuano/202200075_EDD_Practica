@@ -8,7 +8,7 @@
         "capacidad": 180,
         "peso_max_despegue": 79000,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A102",
@@ -30,7 +30,7 @@
         "capacidad": 366,
         "peso_max_despegue": 87500,
         "aerolinea": "Airlinex",
-        "estado": "En mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A104",
@@ -63,7 +63,7 @@
         "capacidad": 315,
         "peso_max_despegue": 87500,
         "aerolinea": "Airlinex",
-        "estado": "En mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A107",
@@ -118,7 +118,7 @@
         "capacidad": 261,
         "peso_max_despegue": 78000,
         "aerolinea": "Airlinex",
-        "estado": "En mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A112",
@@ -151,7 +151,7 @@
         "capacidad": 130,
         "peso_max_despegue": 61000,
         "aerolinea": "Airlinex",
-        "estado": "En mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A115",
@@ -173,7 +173,7 @@
         "capacidad": 280,
         "peso_max_despegue": 84000,
         "aerolinea": "Airlinex",
-        "estado": "En mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A117",
@@ -206,7 +206,7 @@
         "capacidad": 296,
         "peso_max_despegue": 77000,
         "aerolinea": "Airlinex",
-        "estado": "En mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A120",

@@ -1,8 +1,10 @@
-template <typename T>
-struct Nodo {
-    T data;
-    Node* next;
-    Node* prev;
 
-    Node(T value) : data(value), next(nullptr), prev(nullptr) {}
+template <typename T>
+class Nodo {
+public:
+    T data;
+    Nodo<T>* next;
+    Nodo<T>* prev;
+
+    Nodo(const T& value) : data(value), next(nullptr), prev(nullptr) {}
 };
