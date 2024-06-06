@@ -2,7 +2,7 @@
 #include "./Objects/nodo.h"
 #include <limits>
 #include <fstream>
-#include "./json.hpp"
+#include "./librerias/json.hpp"
 using namespace std;
 
 using json = nlohmann::json;
@@ -58,7 +58,7 @@ int main(){
 }
 
 void ReadJson(){
-    string filePath = "Aviones.json"; // Ruta del archivo JSON
+    string filePath = "./ArchivosEntrada/Aviones.json"; // Ruta del archivo JSON
 
     // Leer el archivo JSON
     ifstream inputFile(filePath);

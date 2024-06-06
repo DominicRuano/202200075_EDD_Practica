@@ -1,17 +1,8 @@
-#include <iostream>
-using namespace std;
+template <typename T>
+struct Nodo {
+    T data;
+    Node* next;
+    Node* prev;
 
-class nodo{
-private:
-    /* data */
-public:
-    nodo(/* args */);
-    ~nodo();
+    Node(T value) : data(value), next(nullptr), prev(nullptr) {}
 };
-    
-nodo::nodo(/* args */){
-    
-}
-nodo::~nodo(){
-    
-}
