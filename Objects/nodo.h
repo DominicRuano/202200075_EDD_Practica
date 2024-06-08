@@ -1,6 +1,7 @@
+#pragma once
 
 template <typename T>
-class Nodo {
+class Nodo{
 public:
     T data;
     Nodo<T>* next;
