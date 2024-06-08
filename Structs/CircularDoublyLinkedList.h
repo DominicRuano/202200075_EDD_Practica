@@ -6,12 +6,14 @@ template <typename T>
 class CircularDoublyLinkedList{
 private:
     Nodo<T> *head;
+    int length = 0;
     //Nodo<T> *current;
 public:
     CircularDoublyLinkedList(/* args */);
     ~CircularDoublyLinkedList();
 
     void insert(T &value);
+    int getLength(){return length;}
     void print();
 };
 
@@ -38,14 +40,19 @@ void CircularDoublyLinkedList<T>::insert(T &Value){
         nuevoNodo->next = head;
         head->prev = nuevoNodo;
     }
+    length++;
 }
 
 template <typename T>
 void CircularDoublyLinkedList<T>::print(){
     Nodo<T>* current = head;
-    do{
-        current->data.print();
-        cout << "-------------------------------------------" << endl;
-        current = current->next;
-    }while(current != head);
+    if (length > 0)
+        for (int i = 0; i < length; i++){
+            current->data.print();
+            cout << "---------------------------" << endl;
+            current = current->next;
+        }
+    else 
+        cout << "Lista vacia." << endl;
+
 }
