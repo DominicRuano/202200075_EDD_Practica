@@ -43,7 +43,7 @@ void Queue<T>::enqueue(T &value){
 template <class T>
 T Queue<T>::dequeue(){
     if (!head)
-        throw cout << "La cola esta vacia." << endl;
+        throw out_of_range("La cola esta vacia.");
     T val = head->data;
     Nodo<T> *temp = head;
     head = head->next;

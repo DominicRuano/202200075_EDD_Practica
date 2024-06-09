@@ -24,30 +24,42 @@ DoublyLinkedList<T>::~DoublyLinkedList(){
 }
 
 template <class T>
-void DoublyLinkedList<T>::add(T &val){
+void DoublyLinkedList<T>::add(T &val) {
     Nodo<T> *NuevoNodo = new Nodo<T>(val);
-    if (!head){
+    if (!head) {
         head = NuevoNodo;
-        head->next = head;
-        head->prev = head;
-    }
-    else{
+    } else {
         Nodo<T> *current = head;
-        while (current->data.getVuelo() > NuevoNodo->data.getVuelo())
+        while ((current->data.getVuelo() > NuevoNodo->data.getVuelo() ||
+                (current->data.getVuelo() == NuevoNodo->data.getVuelo() && current->data.getAsiento() > NuevoNodo->data.getAsiento())) &&
+            current->next != nullptr) {
             current = current->next;
-        while ((current->data.getVuelo() == NuevoNodo->data.getVuelo())&&(current->data.getAsiento() > NuevoNodo->data.getAsiento()))
-            current = current->next;
-        current->prev->next = NuevoNodo;
-        NuevoNodo->prev = current->prev;
-        NuevoNodo->next = current;
-        current->prev = NuevoNodo;
+        }
+        
+        if (current->next == nullptr && 
+            (current->data.getVuelo() > NuevoNodo->data.getVuelo() ||
+            (current->data.getVuelo() == NuevoNodo->data.getVuelo() && current->data.getAsiento() > NuevoNodo->data.getAsiento()))) {
+            current->next = NuevoNodo;
+            NuevoNodo->prev = current;
+        } else {
+            if (current->prev != nullptr) {
+                current->prev->next = NuevoNodo;
+            } else {
+                head = NuevoNodo;
+            }
+            NuevoNodo->prev = current->prev;
+            NuevoNodo->next = current;
+            current->prev = NuevoNodo;
+        }
     }
+    length++;
 }
+
 
 template <class T>
 void DoublyLinkedList<T>::Print(){
     if (!head)
-        throw cout << "La lista esta vacia!" << endl;
+        cout << "La lista esta vacia!" << endl ;
     else {
         Nodo<T> *current = head;
         for (int i = 0; i < length; i++){

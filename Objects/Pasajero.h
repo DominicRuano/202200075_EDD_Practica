@@ -25,6 +25,7 @@ public:
     void print();
     string getVuelo(){return vuelo;}
     int getAsiento(){return asiento;}
+    int getEquipaje(){return equipaje;}
 
 };
 
@@ -47,6 +48,7 @@ void Pasajero::print(){
     cout << "Nombre: " << nombre << endl;
     cout << "Nacionalidad: " << nacionalidad << endl;
     cout << "Numero de Pasaporte: " << numeroPasaporte << endl;
+    cout << "Vuelo: " << vuelo << endl;
     cout << "Asiento: " << asiento << endl;
     cout << "Destino: " << destino << endl;
     cout << "Origen: " << origen << endl;

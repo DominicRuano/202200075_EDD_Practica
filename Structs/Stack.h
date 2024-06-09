@@ -28,19 +28,20 @@ Stack<T>::~Stack(){
 template<class T>
 void Stack<T>::push(T &value){
     Nodo<T> *NuevoNodo = new Nodo<T>(value);
-    if (Top)
+    if (!Top)
         Top = NuevoNodo;
     else{
         Nodo<T> *current = Top;
         Top = NuevoNodo;
         NuevoNodo->prev = current;
     }
+    length++;
 }
 
 template<class T>
 T Stack<T>::pop(){
     if (!Top)
-        throw cout << "La pila esta vacia!" << endl;
+        out_of_range("La pila esta vacia!");
     T val = Top->data;
     Nodo<T> *Temp = Top;
     Top = Top->prev;
@@ -51,13 +52,14 @@ T Stack<T>::pop(){
 
 template<class T>
 void Stack<T>::Print(){
-    if (!Top)
-        throw cout << "La pila esta vacia!" << endl;
-    
-    Nodo<T> *Current = Top;
-    for (int i = 0; i < length; i++){
-        Current->data.print();
-        cout << "----------------------------------" << endl;
-        Current = Current->prev;
+    if (!Top){
+        cout << "La pila esta vacia!" << endl;
+    }else {
+        Nodo<T> *Current = Top;
+        for (int i = 0; i < length; i++){
+            Current->data.print();
+            cout << "----------------------------------" << endl;
+            Current = Current->prev;
+        }
     }
 }

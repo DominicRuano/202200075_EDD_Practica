@@ -8,22 +8,23 @@ using namespace std;
 
 using json = nlohmann::json;
 
-
-
 template <typename T>
 void GetOp(T &input);
 void Menu(int &input);
 json ReadJson(string filePath);
 bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2);
 bool EncolarClientes(Queue<Pasajero> &colaPasajeros);
-bool CargarMovimientos();
+bool CargarMovimientos(CircularDoublyLinkedList<avion> &listaAviones, 
+                        CircularDoublyLinkedList<avion> &listaAviones2, 
+                        Queue<Pasajero> &colaPasajeros, 
+                        Stack<Pasajero> &pilaPasajeros, 
+                        DoublyLinkedList<Pasajero> &listaPasajeros);
 
 int main(){
     int input;      // Guarda el valor seleccionado por el usuario.
     bool cond;   // Condicion para salir del ciclo.
 
     Agencia *agencia = new Agencia();
-    
 
     while (input != 6){
         cond = false;
@@ -37,7 +38,11 @@ int main(){
             while (!EncolarClientes(agencia->getQueuePasajeros()));
             break;
         case 3:
-            while (!CargarMovimientos());
+            while (!CargarMovimientos(agencia->getListAvionesDisponibles(), 
+                                        agencia->getListAvionesMantenimiento(), 
+                                        agencia->getQueuePasajeros(), 
+                                        agencia->getStackPasajeros(), 
+                                        agencia->getListPasajeros()));
             break;
         case 4:
             // Funcion aqui.
@@ -45,12 +50,16 @@ int main(){
         case 5:
             /*
             cout << "\n - Lista de Aviones En mantenimiento: " << endl;
-            agencia->getListAvionesMantenimiento().print();
+            agencia->getListAvionesMantenimiento().Print();
             cout << "\n - Lista de Aviones Disponibles: " << endl;
-            agencia->getListAvionesDisponibles().print();
+            agencia->getListAvionesDisponibles().Print();
+            */
             cout << "\n - La cola de pasajero es: " << endl;
             agencia->getQueuePasajeros().print();
-            */
+            cout << "\n - La lista de pasajero es: " << endl;
+            agencia->getListPasajeros().Print();
+            cout << "\n - La pila de pasajero es: " << endl;
+            agencia->getStackPasajeros().Print();
             cout << "Presiona Enter para continuar...";
             _getch();  // Espera a que el usuario presione cualquier tecla
             break;
@@ -68,7 +77,7 @@ Funcion para cargar los movimientos.
 aun no recibe parametros.
 Retorna un booleano, true si se cargaron los movimientos correctamente, false si hubo un error.
 */
-bool CargarMovimientos(){
+bool CargarMovimientos(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2, Queue<Pasajero> &colaPasajeros, Stack<Pasajero> &pilaPasajeros, DoublyLinkedList<Pasajero> &listaPasajeros){
     string path;
 
     cout << "\tIngrese la ruta del archivo TXT de Movimientos: ";
@@ -86,14 +95,16 @@ bool CargarMovimientos(){
         // Leer el archivo línea por línea
         while (std::getline(inputFile, line)) {
             if (line.compare("IngresoEquipajes;") == 0){
-                cout << "Se detecto Ingreso de Equipajes" << endl;
-                // Aqui se debe hacer algo con la cola de pasajeros.
-                
+                cout << "\tSe detecto Ingreso de Equipajes" << endl;
+                Pasajero pasajero1 = colaPasajeros.dequeue();
+                if (pasajero1.getEquipaje() > 0)
+                    pilaPasajeros.push(pasajero1);
+                listaPasajeros.add(pasajero1);
             }else if (line.compare(0, 29, "MantenimientoAviones,Ingreso,") == 0){
-                cout << "Se detecto ingreso a mantenimiento de Aviones" << endl;
+                cout << "\tSe detecto ingreso a mantenimiento de Aviones" << endl;
                 // Aqui se debe hacer algo con la lista de aviones.
             }else if (line.compare(0, 28, "MantenimientoAviones,Salida,") == 0){
-                cout << "Se detecto salida de Mantenimiento de Aviones" << endl;
+                cout << "\tSe detecto salida de Mantenimiento de Aviones" << endl;
                 // Aqui se debe hacer algo con la lista de aviones.
             }   
         }
