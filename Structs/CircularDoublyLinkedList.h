@@ -23,7 +23,7 @@ CircularDoublyLinkedList<T>::CircularDoublyLinkedList(/* args */){
 }
 template <typename T>
 CircularDoublyLinkedList<T>::~CircularDoublyLinkedList(){
-    
+    // Pendiente de implementar
 }
 
 template <typename T>

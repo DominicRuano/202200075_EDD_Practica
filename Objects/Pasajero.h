@@ -23,6 +23,9 @@ public:
     ~Pasajero();
 
     void print();
+    string getVuelo(){return vuelo;}
+    int getAsiento(){return asiento;}
+
 };
 
 Pasajero::Pasajero(string nombre, string nacionalidad, string numeroPasaporte,string vuelo, int asiento, string destino, string origen, int equipaje){
@@ -37,7 +40,7 @@ Pasajero::Pasajero(string nombre, string nacionalidad, string numeroPasaporte,st
 }
 
 Pasajero::~Pasajero(){
-    
+    // Pendiente de implementar
 }
 
 void Pasajero::print(){
