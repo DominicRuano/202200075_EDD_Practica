@@ -13,6 +13,7 @@ public:
     ~CircularDoublyLinkedList();
 
     void insert(T &value);
+    T remove(string vuelo);
     int getLength(){return length;}
     void Print();
 };
@@ -42,6 +43,40 @@ void CircularDoublyLinkedList<T>::insert(T &Value){
     }
     length++;
 }
+
+template <typename T>
+T CircularDoublyLinkedList<T>::remove(string vuelo) {
+    if (length == 0)
+        throw std::out_of_range("Lista vacía.");
+
+    Nodo<T>* current = head;
+
+    // Encontrar el nodo con el vuelo especificado
+    do {
+        if (current->data.getVuelo() == vuelo) {
+            T data = current->data;
+            // Caso de un solo elemento en la lista
+            if (length == 1) {
+                head = nullptr;
+            } else {
+                Nodo<T>* prev = current->prev;
+                Nodo<T>* next = current->next;
+                prev->next = next;
+                next->prev = prev;
+                if (current == head) {
+                    head = next;
+                }
+            }
+            delete current;
+            length--;
+            return data;
+        }
+        current = current->next;
+    } while (current != head);
+
+    throw std::out_of_range("Vuelo no encontrado.");
+}
+
 
 template <typename T>
 void CircularDoublyLinkedList<T>::Print(){

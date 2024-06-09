@@ -25,6 +25,7 @@ public:
     ~avion();
 
     void print();
+    string getVuelo(){return vuelo;}
 };
 
 avion::avion(string vuelo, string numDeRegistro, string modelo, string fabricante, int anioDeFabricacion, int capacidad, int pesoMaximo, string aerolinea, string estado){

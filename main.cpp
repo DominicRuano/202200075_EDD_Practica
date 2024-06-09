@@ -2,6 +2,7 @@
 #include <conio.h>  // Para getch()
 #include <limits>
 #include <fstream>
+#include <regex>
 #include "./librerias/json.hpp"
 #include "./Objects/Agencia.h"
 using namespace std;
@@ -48,18 +49,18 @@ int main(){
             // Funcion aqui.
             break;
         case 5:
-            /*
             cout << "\n - Lista de Aviones En mantenimiento: " << endl;
             agencia->getListAvionesMantenimiento().Print();
             cout << "\n - Lista de Aviones Disponibles: " << endl;
             agencia->getListAvionesDisponibles().Print();
-            */
+            /*
             cout << "\n - La cola de pasajero es: " << endl;
             agencia->getQueuePasajeros().print();
             cout << "\n - La lista de pasajero es: " << endl;
             agencia->getListPasajeros().Print();
             cout << "\n - La pila de pasajero es: " << endl;
             agencia->getStackPasajeros().Print();
+            */
             cout << "Presiona Enter para continuar...";
             _getch();  // Espera a que el usuario presione cualquier tecla
             break;
@@ -79,6 +80,9 @@ Retorna un booleano, true si se cargaron los movimientos correctamente, false si
 */
 bool CargarMovimientos(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2, Queue<Pasajero> &colaPasajeros, Stack<Pasajero> &pilaPasajeros, DoublyLinkedList<Pasajero> &listaPasajeros){
     string path;
+    smatch matches;
+    regex pattern1(R"(MantenimientoAviones,Ingreso,([^;]+);)");
+    regex pattern2(R"(MantenimientoAviones,Salida,([^;]+);)");
 
     cout << "\tIngrese la ruta del archivo TXT de Movimientos: ";
     GetOp(path);
@@ -102,10 +106,14 @@ bool CargarMovimientos(CircularDoublyLinkedList<avion> &listaAviones, CircularDo
                 listaPasajeros.add(pasajero1);
             }else if (line.compare(0, 29, "MantenimientoAviones,Ingreso,") == 0){
                 cout << "\tSe detecto ingreso a mantenimiento de Aviones" << endl;
-                // Aqui se debe hacer algo con la lista de aviones.
+                regex_search(line, matches, pattern1);
+                avion avionActual = listaAviones.remove(matches[1]);
+                listaAviones2.insert(avionActual);
             }else if (line.compare(0, 28, "MantenimientoAviones,Salida,") == 0){
+                regex_search(line, matches, pattern2);
                 cout << "\tSe detecto salida de Mantenimiento de Aviones" << endl;
-                // Aqui se debe hacer algo con la lista de aviones.
+                avion avionActual = listaAviones2.remove(matches[1]);
+                listaAviones.insert(avionActual);
             }   
         }
 
