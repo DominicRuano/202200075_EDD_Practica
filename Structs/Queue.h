@@ -22,7 +22,7 @@ Queue<T>::Queue(){
 
 template <class T>
 Queue<T>::~Queue(){
-    
+    // Pendiente de implementar
 }
 
 template <class T>
@@ -62,5 +62,5 @@ void Queue<T>::print(){
             current = current->next;
         }
     else 
-        cout << "Lista vacia." << endl;
+        cout << "La cola esta vacia!" << endl;
 }
