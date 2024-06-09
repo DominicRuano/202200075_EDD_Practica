@@ -3,43 +3,27 @@
 #include <limits>
 #include <fstream>
 #include "./librerias/json.hpp"
-#include "./Structs/CircularDoublyLinkedList.h"
-#include "./Structs/Queue.h"
-#include "./Objects/avion.h"
-#include "./Objects/Pasajero.h"
+#include "./Objects/Agencia.h"
 using namespace std;
 
 using json = nlohmann::json;
 
 
 
-/*Funcion que recibe un puntero de tipo generico.*/
 template <typename T>
 void GetOp(T &input);
-
-/* Funcion que despliega el menu principal.
-    Recibe como parametro una direccion en la cual se guardara la opcion seleccionada.*/
 void Menu(int &input);
-
-/* Funcion que lee un json. 
-    Recibe como parametro un string con el path del json y dos lista, aviones disponibles, aviones en mantenimiento*/
 json ReadJson(string filePath);
-
-/*Funcion para la opcion cargar Aviones.*/
 bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2);
-
-/*Funcion para agregar a los clientes a una cola.*/
-bool EncolarClientes(Queue<Pasajero> colaPasajeros);
+bool EncolarClientes(Queue<Pasajero> &colaPasajeros);
+bool CargarMovimientos();
 
 int main(){
     int input;      // Guarda el valor seleccionado por el usuario.
     bool cond;   // Condicion para salir del ciclo.
 
-    CircularDoublyLinkedList<avion> listaAvionesDisponibles;    /*Guarda aviones disponibles.*/
-    CircularDoublyLinkedList<avion> listaAvionesMantenimiento;  /*Guarda aviones en mantenimiento.*/
-    Queue<Pasajero> colaPasajeros;                              /*Guarda en una cola a los pasajeros. */
-
-    Pasajero person();
+    Agencia *agencia = new Agencia();
+    
 
     while (input != 6){
         cond = false;
@@ -47,22 +31,26 @@ int main(){
         Menu(input); /*Recibe el apuntador para recibir un input usado como seleccion en el menu*/
         switch (input){
         case 1:
-            while (!CargaAviones(listaAvionesDisponibles,listaAvionesMantenimiento));
+            while (!CargaAviones(agencia->getListAvionesDisponibles(), agencia->getListAvionesMantenimiento()));
             break;
         case 2:
-            while (!EncolarClientes(colaPasajeros));
+            while (!EncolarClientes(agencia->getQueuePasajeros()));
             break;
         case 3:
-            // Funcion aqui.
+            while (!CargarMovimientos());
             break;
         case 4:
             // Funcion aqui.
             break;
         case 5:
+            /*
             cout << "\n - Lista de Aviones En mantenimiento: " << endl;
-            listaAvionesMantenimiento.print();
+            agencia->getListAvionesMantenimiento().print();
             cout << "\n - Lista de Aviones Disponibles: " << endl;
-            listaAvionesDisponibles.print();
+            agencia->getListAvionesDisponibles().print();
+            */
+            cout << "\n - La cola de pasajero es: " << endl;
+            agencia->getQueuePasajeros().print();
 
             cout << "Presiona Enter para continuar...";
             _getch();  // Espera a que el usuario presione cualquier tecla
@@ -76,9 +64,56 @@ int main(){
     return 0;
 }
 
-bool EncolarClientes(Queue<Pasajero> colaPasajeros){
+/*
+Funcion para cargar los movimientos de los aviones.
+*/
+bool CargarMovimientos(){
     string path;
-    cout << "\tIngrese la ruta del archivo JSON: ";
+
+    cout << "\tIngrese la ruta del archivo TXT de Movimientos: ";
+    GetOp(path);
+    try{
+        std::ifstream inputFile(path); // Abrir el archivo
+
+        // Verificar si el archivo se abrió correctamente
+        if (!inputFile.is_open()) {
+            std::cerr << "No se pudo abrir el archivo." << std::endl;
+            return false; 
+        }
+
+        string line;
+        // Leer el archivo línea por línea
+        while (std::getline(inputFile, line)) {
+            if (line.compare("IngresoEquipajes;") == 0){
+                cout << "Se detecto Ingreso de Equipajes" << endl;
+                // Aqui se debe hacer algo con la cola de pasajeros.
+                
+            }else if (line.compare(0, 29, "MantenimientoAviones,Ingreso,") == 0){
+                cout << "Se detecto ingreso a mantenimiento de Aviones" << endl;
+                // Aqui se debe hacer algo con la lista de aviones.
+            }else if (line.compare(0, 28, "MantenimientoAviones,Salida,") == 0){
+                cout << "Se detecto salida de Mantenimiento de Aviones" << endl;
+                // Aqui se debe hacer algo con la lista de aviones.
+            }   
+        }
+
+        inputFile.close(); // Cerrar el archivo
+    }catch(const std::exception& e){
+        cout << "Se detecto un error: por favor verifique el path del archivo." << endl;
+        return false;
+    }
+
+    cout << "Presiona Enter para continuar...";
+    _getch();  // Espera a que el usuario presione cualquier tecla
+    return true;
+}
+
+/*
+Funcion para agregar a los clientes a una cola.
+*/
+bool EncolarClientes(Queue<Pasajero> &colaPasajeros){
+    string path;
+    cout << "\tIngrese la ruta del archivo JSON de Clientes: ";
     GetOp(path);
     try{
         json jsonData = ReadJson(path);
@@ -99,9 +134,12 @@ bool EncolarClientes(Queue<Pasajero> colaPasajeros){
     return true;
 }
 
+/*
+Funcion para la opcion cargar Aviones.
+*/
 bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2){
     string path;
-    cout << "\tIngrese la ruta del archivo JSON: ";
+    cout << "\tIngrese la ruta del archivo JSON De Aviones: ";
     GetOp(path);
     try{
         json jsonData = ReadJson(path);
@@ -125,6 +163,10 @@ bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyL
     return true;
 }
 
+/* 
+Funcion que lee un json. 
+Recibe como parametro un string con el path del json y dos lista, aviones disponibles, aviones en mantenimiento
+*/
 json ReadJson(string filePath){
     //string filePath = "./ArchivosEntrada/Aviones.json"; // Ruta del archivo JSON
 
@@ -141,6 +183,10 @@ json ReadJson(string filePath){
     return jsonData;
 }
 
+/* 
+Funcion que despliega el menu principal.
+Recibe como parametro una direccion en la cual se guardara la opcion seleccionada.
+*/
 void Menu(int &input){
     system("cls");
     cout << "------------ MENU --------------" << endl;
@@ -155,6 +201,9 @@ void Menu(int &input){
     GetOp(input);
 }
 
+/*
+Funcion que recibe un puntero de tipo generico.
+*/
 template <typename T>
 void GetOp(T &input){
     cin >> input;
