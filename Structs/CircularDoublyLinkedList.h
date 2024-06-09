@@ -14,7 +14,7 @@ public:
 
     void insert(T &value);
     int getLength(){return length;}
-    void print();
+    void Print();
 };
 
 template <typename T>
@@ -44,7 +44,7 @@ void CircularDoublyLinkedList<T>::insert(T &Value){
 }
 
 template <typename T>
-void CircularDoublyLinkedList<T>::print(){
+void CircularDoublyLinkedList<T>::Print(){
     Nodo<T>* current = head;
     if (length > 0)
         for (int i = 0; i < length; i++){
@@ -53,6 +53,6 @@ void CircularDoublyLinkedList<T>::print(){
             current = current->next;
         }
     else 
-        cout << "Lista vacia." << endl;
+        out_of_range("Lista vacia.");
 
 }
