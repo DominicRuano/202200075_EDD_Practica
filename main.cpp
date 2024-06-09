@@ -48,10 +48,9 @@ int main(){
             agencia->getListAvionesMantenimiento().print();
             cout << "\n - Lista de Aviones Disponibles: " << endl;
             agencia->getListAvionesDisponibles().print();
-            */
             cout << "\n - La cola de pasajero es: " << endl;
             agencia->getQueuePasajeros().print();
-
+            */
             cout << "Presiona Enter para continuar...";
             _getch();  // Espera a que el usuario presione cualquier tecla
             break;
@@ -65,7 +64,9 @@ int main(){
 }
 
 /*
-Funcion para cargar los movimientos de los aviones.
+Funcion para cargar los movimientos.
+aun no recibe parametros.
+Retorna un booleano, true si se cargaron los movimientos correctamente, false si hubo un error.
 */
 bool CargarMovimientos(){
     string path;
@@ -109,7 +110,9 @@ bool CargarMovimientos(){
 }
 
 /*
-Funcion para agregar a los clientes a una cola.
+Funcion para cargar los clientes.
+Recibe una cola de pasajeros.
+Retorna un booleano, true si se cargaron los clientes correctamente, false si hubo un error.
 */
 bool EncolarClientes(Queue<Pasajero> &colaPasajeros){
     string path;
@@ -135,7 +138,9 @@ bool EncolarClientes(Queue<Pasajero> &colaPasajeros){
 }
 
 /*
-Funcion para la opcion cargar Aviones.
+Funcion para cargar los aviones.
+Recibe dos listas de aviones, una para aviones disponibles y otra para aviones en mantenimiento.
+Retorna un booleano, true si se cargaron los aviones correctamente, false si hubo un error.
 */
 bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2){
     string path;
@@ -164,8 +169,7 @@ bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyL
 }
 
 /* 
-Funcion que lee un json. 
-Recibe como parametro un string con el path del json y dos lista, aviones disponibles, aviones en mantenimiento
+Funcion que recibe la ruta(String) de un archivo JSON y retorna un objeto JSON.
 */
 json ReadJson(string filePath){
     //string filePath = "./ArchivosEntrada/Aviones.json"; // Ruta del archivo JSON
@@ -184,8 +188,8 @@ json ReadJson(string filePath){
 }
 
 /* 
-Funcion que despliega el menu principal.
-Recibe como parametro una direccion en la cual se guardara la opcion seleccionada.
+Funcion que imprime el menu de opciones.
+Recibe como parametro un puntero de tipo int, el cual se encarga de recibir el valor del input del usuario.
 */
 void Menu(int &input){
     system("cls");
@@ -202,7 +206,8 @@ void Menu(int &input){
 }
 
 /*
-Funcion que recibe un puntero de tipo generico.
+Recibe como parametro un puntero de tipo T, el cual se encarga de recibir el valor del input del usuario.
+Retorna el valor del input del usuario en el puntero recibido.
 */
 template <typename T>
 void GetOp(T &input){
