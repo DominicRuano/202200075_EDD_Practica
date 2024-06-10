@@ -26,6 +26,7 @@ public:
     string getVuelo(){return vuelo;}
     int getAsiento(){return asiento;}
     int getEquipaje(){return equipaje;}
+    string getPasaporte(){return numeroPasaporte;}
 
 };
 

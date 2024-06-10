@@ -11,6 +11,7 @@ public:
 
     void add(T &val);
     void Print();
+    void consultar(string pasaporte);
 };
 
 template <class T>
@@ -67,5 +68,22 @@ void DoublyLinkedList<T>::Print(){
             cout << "----------------------------------" << endl;
             current = current->next;
         }
+    }
+}
+
+template <class T>
+void DoublyLinkedList<T>::consultar(string pasaporte){
+    if (!head)
+        cout << "La lista esta vacia! y no se puede consultar un pasajero." << endl ;
+    else {
+        Nodo<T> *current = head;
+        for (int i = 0; i < length; i++){
+            if (current->data.getPasaporte() == pasaporte){
+                current->data.print();
+                return;
+            }
+            current = current->next;
+        }
+        cout << "No se encontro el pasajero con pasaporte: " << pasaporte << endl;
     }
 }

@@ -12,6 +12,7 @@ using json = nlohmann::json;
 template <typename T>
 void GetOp(T &input);
 void Menu(int &input);
+void FindByPasaPorte(DoublyLinkedList<Pasajero> &listaPasajeros);
 json ReadJson(string filePath);
 bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyLinkedList<avion> &listaAviones2);
 bool EncolarClientes(Queue<Pasajero> &colaPasajeros);
@@ -46,14 +47,14 @@ int main(){
                                         agencia->getListPasajeros()));
             break;
         case 4:
-            // Funcion aqui.
+            FindByPasaPorte(agencia->getListPasajeros());
             break;
         case 5:
+            /*
             cout << "\n - Lista de Aviones En mantenimiento: " << endl;
             agencia->getListAvionesMantenimiento().Print();
             cout << "\n - Lista de Aviones Disponibles: " << endl;
             agencia->getListAvionesDisponibles().Print();
-            /*
             cout << "\n - La cola de pasajero es: " << endl;
             agencia->getQueuePasajeros().print();
             cout << "\n - La lista de pasajero es: " << endl;
@@ -71,6 +72,19 @@ int main(){
         }
     }
     return 0;
+}
+
+/*
+Funcion para buscar un pasajero por su pasaporte.
+Recibe una lista de pasajeros.
+*/
+void FindByPasaPorte(DoublyLinkedList<Pasajero> &listaPasajeros){
+    string pasaporte;
+    cout << "\tIngrese el No.Pasaporte a consultar: ";
+    GetOp(pasaporte);
+    listaPasajeros.consultar(pasaporte);
+    cout << "Presiona Enter para continuar...";
+    _getch();  // Espera a que el usuario presione cualquier tecla
 }
 
 /*
