@@ -78,6 +78,9 @@ void Stack<T>::graph(ofstream &file, string ID, string str){
                 file << "struct"<< ID << i - 1 << " -> struct" << ID << i << ";" << endl;
             current = current->prev;
         }
+        file << "head" << ID << "0 [label=\"Top\", margin=0, style=filled, color=none, fillcolor=none]" << endl;
+        file << "{rank=same;struct" << ID << "0;head" << ID << "0;}" << endl;
+        file << "head" << ID << "0 -> struct"<< ID <<"0;" << endl;
     }else{
         file <<"node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
         file << "\tstruct" << ID << "0 [label=\"Pila Vacia!\", margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl;

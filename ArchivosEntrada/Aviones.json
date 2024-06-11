@@ -107,7 +107,7 @@
         "capacidad": 295,
         "peso_max_despegue": 85000,
         "aerolinea": "Airlinex",
-        "estado": "Mantenimiento"
+        "estado": "Disponible"
     },
     {
         "vuelo": "A111",
