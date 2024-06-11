@@ -95,12 +95,12 @@ void CircularDoublyLinkedList<T>::Print(){
 template <typename T>
 void CircularDoublyLinkedList<T>::graph(ofstream &file, string ID, string str){
     Nodo<T>* current = head;
+    file << "subgraph cluster_" << ID << " {" << endl;
+    file << "\tlabel=\"" << str << "\";" << endl;
+    file << "\tcolor=blue;" << endl;
     if (length > 0){
-            file << "subgraph cluster_" << ID << " {" << endl;
-            file << "\tlabel=\"" << str << "\";" << endl;
-            file << "\tcolor=blue;" << endl;
         for (int i = 0; i < length; i++){
-            file << "\tstruct" << ID << i << " [label=\" Vuelo: " << current->data.getVuelo() << "\\n No.Registro: " << current->data.getNumDeRegistro() << "\\n Estado: " << current->data.getEstado() << "\"]" << endl;
+            file << "\tstruct" << ID << i << " [label=\"Vuelo: " << current->data.getVuelo() << "\\nNo.Registro: " << current->data.getNumDeRegistro() << "\\nEstado: " << current->data.getEstado() << "\"]" << endl;
             if (i > 0){
                 file << "\tstruct" << ID << i-1 << " -> struct"<< ID << i << ";" << endl;
                 file << "\tstruct" << ID << i << " -> struct" << ID << i-1 << ";" << endl;
@@ -111,6 +111,8 @@ void CircularDoublyLinkedList<T>::graph(ofstream &file, string ID, string str){
         file << "\tstruct" << ID << "0 -> struct" << ID << length-1 << ";" << endl;
         file << "}" << endl;
     }else{
-        throw out_of_range("Lista vacia.");
+        file <<"node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
+        file << "\tstruct" << ID << "0 [label=\"Lista Vacia!\", margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl;
+        file << "}" << endl;
     }
 }

@@ -43,19 +43,25 @@ Agencia::~Agencia(){
 
 void Agencia::GraficarAvionesDisponibles(){
     ofstream file;
-    file.open("AvionesDisponibles.dot");
+    file.open("Reporte.dot");
     file << "digraph G {" << endl;
-    file << "node [shape=record];" << endl;
     file << "rankdir=LR;" << endl;
-    file << "label=\"Grafico de todas las estructuras de datos.\";" << endl;
+    file << "node [margin=0, style=filled, fillcolor=beige];" << endl;
+    file << "agencia [label =\"Grafico de todas las estructuras de datos.\"]" << endl;
     file << "labelloc=t;" << endl;
     file << "labeljust=l;" << endl;
-    file << "node [shape=record];" << endl;
+    file << "agencia -> structA0[style=dotted];" << endl;
     this->listaAvionesDisponibles->graph(file, "A", "Lista circular de aviones disponibles");
+    file << "agencia -> structB0[style=dotted];" << endl;
     this->listaAvionesMantenimiento->graph(file, "B", "Lista circular de aviones en mantenimiento");
-    //file << "struct1 [label=\"{Avion | Numero de Vuelo: 1234 | Numero de Registro: 1234 | Modelo: 1234 | Fabricante: 1234 | Anio de Fabricacion: 1234 | Capacidad: 1234 | Peso Maximo: 1234 | Aerolinea: 1234 | Estado: 1234}\"];" << endl;
+    //file << "agencia -> structC0[style=dotted];" << endl;
+    //this->colaPasajeros->graph(file, "C", "Cola de pasajeros");
+    //if (pilaPasajeros->getLength() > 0)
+    //    this->pilaPasajeros->graph(file, "D", "Pila de pasajeros");
+    //if (listaPasajeros->getLength() > 0)
+    //    this->listaPasajeros->graph(file, "E", "Lista doblemente enlazada de pasajeros");
     file << "}" << endl;
     file.close();
-    system("dot -Tpng AvionesDisponibles.dot -o AvionesDisponibles.png");
-    system("AvionesDisponibles.png");
+    system("dot -Tpng Reporte.dot -o Reporte.png");
+    system("Reporte.png");
 }
