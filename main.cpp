@@ -150,7 +150,7 @@ Retorna un booleano, true si se cargaron los clientes correctamente, false si hu
 */
 bool EncolarClientes(Queue<Pasajero> &colaPasajeros){
     string path;
-    cout << "\tIngrese la ruta del archivo JSON de Clientes: ";
+    cout << "\tIngrese la ruta del archivo JSON de Pasajeros: ";
     GetOp(path);
     try{
         json jsonData = ReadJson(path);

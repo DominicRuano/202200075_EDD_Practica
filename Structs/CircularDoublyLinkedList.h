@@ -109,10 +109,15 @@ void CircularDoublyLinkedList<T>::graph(ofstream &file, string ID, string str){
         }
         file << "\tstruct" << ID << length-1 << " -> struct" << ID << "0;" << endl;
         file << "\tstruct" << ID << "0 -> struct" << ID << length-1 << ";" << endl;
-        file << "}" << endl;
+        file << "head" << ID << "0 [label=\"Head\", margin=0, style=filled, color=none, fillcolor=none]" << endl;
+        file << "head" << ID << "1 [label=\"Tail\", margin=0, style=filled, color=none, fillcolor=none]" << endl;
+        file << "{rank=same;struct" << ID << "0;head" << ID << "0;}" << endl;
+        file << "{rank=same;struct" << ID << length - 1 << ";head" << ID << "1;}" << endl;
+        file << "head" << ID << "0 -> struct"<< ID <<"0;" << endl;
+        file << "head" << ID << "1 -> struct"<< ID << length - 1 << ";" << endl;
     }else{
-        file <<"node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
+        file << "node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
         file << "\tstruct" << ID << "0 [label=\"Lista Vacia!\", margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl;
-        file << "}" << endl;
     }
+    file << "}" << endl;
 }

@@ -13,6 +13,7 @@ public:
     T pop();
     int getLength(){return length;}
     void Print();
+    void graph(ofstream &file, string ID, string str);
 };
 
 template <class T>
@@ -62,4 +63,24 @@ void Stack<T>::Print(){
             Current = Current->prev;
         }
     }
+}
+
+template<class T>
+void Stack<T>::graph(ofstream &file, string ID, string str){
+    Nodo<T> *current = Top;
+    file << "subgraph cluster" << ID << "{" << endl;
+    file << "label = \"" << str << "\";" << endl;
+    file << "\tcolor=green;" << endl;
+    if (length > 0){
+        for (int i = 0; i < length; i++){
+            file << "\tstruct" << ID << i << " [label=\"No.Pasaporte: " << current->data.getPasaporte() << "\\nNombre: " << current->data.getNombre() << "\"]" << endl;
+            if (i > 0)
+                file << "struct"<< ID << i - 1 << " -> struct" << ID << i << ";" << endl;
+            current = current->prev;
+        }
+    }else{
+        file <<"node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
+        file << "\tstruct" << ID << "0 [label=\"Pila Vacia!\", margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl;
+    }
+    file << "}" << endl;
 }

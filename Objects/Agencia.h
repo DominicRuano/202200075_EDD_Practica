@@ -45,7 +45,7 @@ void Agencia::GraficarAvionesDisponibles(){
     ofstream file;
     file.open("Reporte.dot");
     file << "digraph G {" << endl;
-    file << "rankdir=LR;" << endl;
+    file << "rankdir=TB;" << endl;
     file << "node [margin=0, style=filled, fillcolor=beige];" << endl;
     file << "agencia [label =\"Grafico de todas las estructuras de datos.\"]" << endl;
     file << "labelloc=t;" << endl;
@@ -54,12 +54,12 @@ void Agencia::GraficarAvionesDisponibles(){
     this->listaAvionesDisponibles->graph(file, "A", "Lista circular de aviones disponibles");
     file << "agencia -> structB0[style=dotted];" << endl;
     this->listaAvionesMantenimiento->graph(file, "B", "Lista circular de aviones en mantenimiento");
-    //file << "agencia -> structC0[style=dotted];" << endl;
-    //this->colaPasajeros->graph(file, "C", "Cola de pasajeros");
-    //if (pilaPasajeros->getLength() > 0)
-    //    this->pilaPasajeros->graph(file, "D", "Pila de pasajeros");
-    //if (listaPasajeros->getLength() > 0)
-    //    this->listaPasajeros->graph(file, "E", "Lista doblemente enlazada de pasajeros");
+    file << "agencia -> structC0[style=dotted];" << endl;
+    this->colaPasajeros->graph(file, "C", "Cola de pasajeros");
+    file << "agencia -> structD0[style=dotted];" << endl;
+    this->pilaPasajeros->graph(file, "D", "Pila de pasajeros");
+    file << "agencia -> structE0[style=dotted];" << endl;
+    this->listaPasajeros->graph(file, "E", "Lista doblemente enlazada de pasajeros");
     file << "}" << endl;
     file.close();
     system("dot -Tpng Reporte.dot -o Reporte.png");

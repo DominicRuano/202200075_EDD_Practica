@@ -13,6 +13,7 @@ public:
     T dequeue();
     int getLength(){return length;}
     void print();
+    void graph(ofstream &file, string ID, string str);
 };
 
 template <class T>
@@ -63,4 +64,30 @@ void Queue<T>::print(){
         }
     else 
         cout << "La cola esta vacia!" << endl;
+}
+
+template <class T>
+void Queue<T>::graph(ofstream &file, string ID, string str){
+    Nodo<T>* current = head;
+    file << "subgraph cluster_" << ID << " {" << endl;
+    file << "\tlabel=\"" << str << "\";" << endl;
+    file << "\tcolor=red;" << endl;
+    if (length > 0){
+        for (int i = 0; i < length; i++){
+            file << "\tstruct" << ID << i << " [label=\"No.Pasaporte: " << current->data.getPasaporte() << "\\nNombre: " << current->data.getNombre() << "\\nEquipaje: " << current->data.getEquipaje() <<"\"]" << endl;
+            if (i > 0)
+                file << "\tstruct" << ID << i-1 << " -> struct"<< ID << i << ";" << endl;
+            current = current->next;
+        }
+        file << "head" << ID << "0 [label=\"Front\", margin=0, style=filled, color=none, fillcolor=none]" << endl;
+        file << "head" << ID << "1 [label=\"Rear\", margin=0, style=filled, color=none, fillcolor=none]" << endl;
+        file << "{rank=same;struct" << ID << "0;head" << ID << "0;}" << endl;
+        file << "{rank=same;struct" << ID << length - 1 <<";head" << ID << "1;}" << endl;
+        file << "head" << ID << "0 -> struct"<< ID <<"0;" << endl;
+        file << "head" << ID << "1 -> struct"<< ID << (length - 1) << ";" << endl;
+    }else{
+        file <<"node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
+        file << "\tstruct" << ID << "0 [label=\"Cola Vacia!\", margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl;
+    }
+    file << "}" << endl;
 }

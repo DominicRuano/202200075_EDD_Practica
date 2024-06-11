@@ -12,6 +12,7 @@ public:
     void add(T &val);
     void Print();
     void consultar(string pasaporte);
+    void graph(ofstream &file, string ID, string str);
 };
 
 template <class T>
@@ -85,5 +86,28 @@ void DoublyLinkedList<T>::consultar(string pasaporte){
             current = current->next;
         }
         cout << "No se encontro el pasajero con pasaporte: " << pasaporte << endl;
+    }
+}
+
+template <class T>
+void DoublyLinkedList<T>::graph(ofstream &file, string ID, string str){
+    Nodo<T>* current = head;
+    file << "subgraph cluster_" << ID << " {" << endl;
+    file << "\tlabel=\"" << str << "\";" << endl;
+    file << "\tcolor=blue;" << endl;
+    if (length > 0){
+        for (int i = 0; i < length; i++){
+            file << "\tstruct" << ID << i << " [label=\"No.Pasaporte: " << current->data.getPasaporte() << "\\nNombre: " << current->data.getNombre() << "\\nEquipaje: " << current->data.getEquipaje() <<"\"]" << endl;
+            if (i > 0){
+                file << "\tstruct" << ID << i-1 << " -> struct"<< ID << i << ";" << endl;
+                file << "\tstruct" << ID << i << " -> struct" << ID << i-1 << ";" << endl;
+            }
+            current = current->next;
+        }
+        file << "}" << endl;
+    }else{
+        file <<"node [margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl; 
+        file << "\tstruct" << ID << "0 [label=\"Lista Vacia!\", margin=0, shape=box, style=filled, color=none, fillcolor=none];" << endl;
+        file << "}" << endl;
     }
 }
