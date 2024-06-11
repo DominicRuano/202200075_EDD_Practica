@@ -16,6 +16,7 @@ public:
     T remove(string vuelo);
     int getLength(){return length;}
     void Print();
+    void graph(ofstream &filem, string ID, string str);
 };
 
 template <typename T>
@@ -89,5 +90,27 @@ void CircularDoublyLinkedList<T>::Print(){
         }
     else 
         out_of_range("Lista vacia.");
+}
 
+template <typename T>
+void CircularDoublyLinkedList<T>::graph(ofstream &file, string ID, string str){
+    Nodo<T>* current = head;
+    if (length > 0){
+            file << "subgraph cluster_" << ID << " {" << endl;
+            file << "\tlabel=\"" << str << "\";" << endl;
+            file << "\tcolor=blue;" << endl;
+        for (int i = 0; i < length; i++){
+            file << "\tstruct" << ID << i << " [label=\" Vuelo: " << current->data.getVuelo() << "\\n No.Registro: " << current->data.getNumDeRegistro() << "\\n Estado: " << current->data.getEstado() << "\"]" << endl;
+            if (i > 0){
+                file << "\tstruct" << ID << i-1 << " -> struct"<< ID << i << ";" << endl;
+                file << "\tstruct" << ID << i << " -> struct" << ID << i-1 << ";" << endl;
+            }
+            current = current->next;
+        }
+        file << "\tstruct" << ID << length-1 << " -> struct" << ID << "0;" << endl;
+        file << "\tstruct" << ID << "0 -> struct" << ID << length-1 << ";" << endl;
+        file << "}" << endl;
+    }else{
+        throw out_of_range("Lista vacia.");
+    }
 }

@@ -50,6 +50,7 @@ int main(){
             FindByPasaPorte(agencia->getListPasajeros());
             break;
         case 5:
+            agencia->GraficarAvionesDisponibles();
             /*
             cout << "\n - Lista de Aviones En mantenimiento: " << endl;
             agencia->getListAvionesMantenimiento().Print();

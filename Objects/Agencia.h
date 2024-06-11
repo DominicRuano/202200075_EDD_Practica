@@ -22,6 +22,7 @@ public:
     Queue<Pasajero> &getQueuePasajeros(){return *colaPasajeros;}
     Stack<Pasajero> &getStackPasajeros(){return *pilaPasajeros;}
     DoublyLinkedList<Pasajero> &getListPasajeros(){return *listaPasajeros;}
+    void GraficarAvionesDisponibles();
 
 };
 
@@ -38,4 +39,23 @@ Agencia::~Agencia(){
     delete colaPasajeros;
     delete pilaPasajeros;
     delete listaPasajeros;
+}
+
+void Agencia::GraficarAvionesDisponibles(){
+    ofstream file;
+    file.open("AvionesDisponibles.dot");
+    file << "digraph G {" << endl;
+    file << "node [shape=record];" << endl;
+    file << "rankdir=LR;" << endl;
+    file << "label=\"Grafico de todas las estructuras de datos.\";" << endl;
+    file << "labelloc=t;" << endl;
+    file << "labeljust=l;" << endl;
+    file << "node [shape=record];" << endl;
+    this->listaAvionesDisponibles->graph(file, "A", "Lista circular de aviones disponibles");
+    this->listaAvionesMantenimiento->graph(file, "B", "Lista circular de aviones en mantenimiento");
+    //file << "struct1 [label=\"{Avion | Numero de Vuelo: 1234 | Numero de Registro: 1234 | Modelo: 1234 | Fabricante: 1234 | Anio de Fabricacion: 1234 | Capacidad: 1234 | Peso Maximo: 1234 | Aerolinea: 1234 | Estado: 1234}\"];" << endl;
+    file << "}" << endl;
+    file.close();
+    system("dot -Tpng AvionesDisponibles.dot -o AvionesDisponibles.png");
+    system("AvionesDisponibles.png");
 }
