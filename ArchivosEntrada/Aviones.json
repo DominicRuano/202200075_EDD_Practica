@@ -19,7 +19,7 @@
         "capacidad": 150,
         "peso_max_despegue": 77000,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A103",
@@ -30,7 +30,7 @@
         "capacidad": 366,
         "peso_max_despegue": 87500,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A104",
@@ -41,7 +41,7 @@
         "capacidad": 525,
         "peso_max_despegue": 120000,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A105",
@@ -52,7 +52,7 @@
         "capacidad": 396,
         "peso_max_despegue": 90000,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A106",
@@ -63,7 +63,7 @@
         "capacidad": 315,
         "peso_max_despegue": 87500,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A107",
@@ -74,7 +74,7 @@
         "capacidad": 242,
         "peso_max_despegue": 73500,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A108",
@@ -85,7 +85,7 @@
         "capacidad": 185,
         "peso_max_despegue": 83000,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A109",
@@ -96,7 +96,7 @@
         "capacidad": 239,
         "peso_max_despegue": 70500,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A110",
@@ -107,7 +107,7 @@
         "capacidad": 295,
         "peso_max_despegue": 85000,
         "aerolinea": "Airlinex",
-        "estado": "Disponible"
+        "estado": "Mantenimiento"
     },
     {
         "vuelo": "A111",
