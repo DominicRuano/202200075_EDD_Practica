@@ -51,20 +51,6 @@ int main(){
             break;
         case 5:
             agencia->GraficarAvionesDisponibles();
-            /*
-            cout << "\n - Lista de Aviones En mantenimiento: " << endl;
-            agencia->getListAvionesMantenimiento().Print();
-            cout << "\n - Lista de Aviones Disponibles: " << endl;
-            agencia->getListAvionesDisponibles().Print();
-            cout << "\n - La cola de pasajero es: " << endl;
-            agencia->getQueuePasajeros().print();
-            cout << "\n - La lista de pasajero es: " << endl;
-            agencia->getListPasajeros().Print();
-            cout << "\n - La pila de pasajero es: " << endl;
-            agencia->getStackPasajeros().Print();
-            */
-            cout << "Presiona Enter para continuar...";
-            _getch();  // Espera a que el usuario presione cualquier tecla
             break;
         case 6:
             break;
@@ -83,6 +69,10 @@ void FindByPasaPorte(DoublyLinkedList<Pasajero> &listaPasajeros){
     string pasaporte;
     cout << "\tIngrese el No.Pasaporte a consultar: ";
     GetOp(pasaporte);
+    
+    if (pasaporte == "exit")
+        return;
+
     listaPasajeros.consultar(pasaporte);
     cout << "Presiona Enter para continuar...";
     _getch();  // Espera a que el usuario presione cualquier tecla
@@ -101,6 +91,10 @@ bool CargarMovimientos(CircularDoublyLinkedList<avion> &listaAviones, CircularDo
 
     cout << "\tIngrese la ruta del archivo TXT de Movimientos: ";
     GetOp(path);
+
+    if (path == "exit")
+        return true;
+
     try{
         std::ifstream inputFile(path); // Abrir el archivo
 
@@ -114,28 +108,51 @@ bool CargarMovimientos(CircularDoublyLinkedList<avion> &listaAviones, CircularDo
         // Leer el archivo línea por línea
         while (std::getline(inputFile, line)) {
             if (line.compare("IngresoEquipajes;") == 0){
-                cout << "\tSe detecto Ingreso de Equipajes" << endl;
-                Pasajero pasajero1 = colaPasajeros.dequeue();
-                if (pasajero1.getEquipaje() > 0)
-                    pilaPasajeros.push(pasajero1);
-                listaPasajeros.add(pasajero1);
+                try{
+                    Pasajero pasajero1 = colaPasajeros.dequeue();
+                    if (pasajero1.getEquipaje() > 0)
+                        pilaPasajeros.push(pasajero1);
+                    listaPasajeros.add(pasajero1);
+                    if (pasajero1.getEquipaje() > 0)
+                        cout << "\n\tSe ingreso el pasajero " << pasajero1.getNombre() << " con " << pasajero1.getEquipaje() << " equipaje(s) a la lista de pasajeros y a la cola de pasajeros." << endl;
+                    else
+                        cout << "\n\tSe ingreso el pasajero " << pasajero1.getNombre() << " sin equipaje a la lista de pasajeros." << endl;
+                }catch(const std::exception& e){
+                    std::cerr << "\t" << e.what() << '\n';
+                    cout << "\tPresiona Enter para continuar...";
+                    _getch();  // Espera a que el usuario presione cualquier tecla
+                }
             }else if (line.compare(0, 29, "MantenimientoAviones,Ingreso,") == 0){
-                cout << "\tSe detecto ingreso a mantenimiento de Aviones" << endl;
-                regex_search(line, matches, pattern1);
-                avion avionActual = listaAviones.remove(matches[1]);
-                listaAviones2.insert(avionActual);
+                try{
+                    regex_search(line, matches, pattern1);
+                    cout << "\n\tSe realizo ingreso de " << matches[1] <<" en mantenimiento de Aviones." << endl;
+                    avion avionActual = listaAviones.remove(matches[1]);
+                    listaAviones2.insert(avionActual);
+                }catch(const std::exception& e){
+                    std::cerr << "\t" << e.what() << '\n';
+                    cout << "\tPresiona Enter para continuar...";
+                    _getch();  // Espera a que el usuario presione cualquier tecla
+                }
             }else if (line.compare(0, 28, "MantenimientoAviones,Salida,") == 0){
-                regex_search(line, matches, pattern2);
-                cout << "\tSe detecto salida de Mantenimiento de Aviones" << endl;
-                avion avionActual = listaAviones2.remove(matches[1]);
-                listaAviones.insert(avionActual);
+                try{
+                    regex_search(line, matches, pattern2);
+                    cout << "\n\tSe realizo salida de " << matches[1] <<" en Mantenimiento de Aviones." << endl;
+                    avion avionActual = listaAviones2.remove(matches[1]);
+                    listaAviones.insert(avionActual);
+                }catch(const std::exception& e){
+                    std::cerr << "\t" << e.what() << '\n';
+                    cout << "\tPresiona Enter para continuar...";
+                    _getch();  // Espera a que el usuario presione cualquier tecla
+                }
             }   
         }
 
         inputFile.close(); // Cerrar el archivo
     }catch(const std::exception& e){
-        cout << "Se detecto un error: por favor verifique el path del archivo." << endl;
-        return false;
+        cout << e.what() << endl;
+        cout << "Presiona Enter para continuar...";
+        _getch();  // Espera a que el usuario presione cualquier tecla
+        return true;
     }
 
     cout << "Presiona Enter para continuar...";
@@ -152,6 +169,10 @@ bool EncolarClientes(Queue<Pasajero> &colaPasajeros){
     string path;
     cout << "\tIngrese la ruta del archivo JSON de Pasajeros: ";
     GetOp(path);
+
+    if (path == "exit")
+        return true;
+
     try{
         json jsonData = ReadJson(path);
 
@@ -180,6 +201,10 @@ bool CargaAviones(CircularDoublyLinkedList<avion> &listaAviones, CircularDoublyL
     string path;
     cout << "\tIngrese la ruta del archivo JSON De Aviones: ";
     GetOp(path);
+
+    if (path == "exit")
+        return true;
+
     try{
         json jsonData = ReadJson(path);
 
@@ -227,7 +252,7 @@ Recibe como parametro un puntero de tipo int, el cual se encarga de recibir el v
 */
 void Menu(int &input){
     system("cls");
-    cout << "------------ MENU --------------" << endl;
+    cout << "------------ MENU -------------- [ingrese \"exit\", para salir de cualquier submenu]" << endl;
     cout << "1. Carga de Aviones." << endl;
     cout << "2. Carga de Pasajeros." << endl;
     cout << "3. Carga de Movimientos." << endl;
