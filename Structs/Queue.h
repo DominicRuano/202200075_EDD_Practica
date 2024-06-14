@@ -74,7 +74,7 @@ void Queue<T>::graph(ofstream &file, string ID, string str){
     file << "\tcolor=red;" << endl;
     if (length > 0){
         for (int i = 0; i < length; i++){
-            file << "\tstruct" << ID << i << " [label=\"No.Pasaporte: " << current->data.getPasaporte() << "\\nNombre: " << current->data.getNombre() << "\\nEquipaje: " << current->data.getEquipaje() <<"\"]" << endl;
+            file << "\tstruct" << ID << i << " [label=\"No.Pasaporte: " << current->data.getPasaporte() << "\\nNombre: " << current->data.getNombre() << "\\nEquipaje: " << current->data.getEquipaje() << "\\nVuelo: " << current->data.getVuelo() << "\\nAsiento: " << current->data.getAsiento() << "\"]" << endl;
             if (i > 0)
                 file << "\tstruct" << ID << i-1 << " -> struct"<< ID << i << ";" << endl;
             current = current->next;

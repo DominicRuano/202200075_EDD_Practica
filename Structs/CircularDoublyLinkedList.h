@@ -48,13 +48,13 @@ void CircularDoublyLinkedList<T>::insert(T &Value){
 template <typename T>
 T CircularDoublyLinkedList<T>::remove(string vuelo) {
     if (length == 0)
-        throw std::out_of_range("Lista vacía.");
+        throw std::out_of_range("Lista vacía.\n");
 
     Nodo<T>* current = head;
 
     // Encontrar el nodo con el vuelo especificado
     do {
-        if (current->data.getVuelo() == vuelo) {
+        if (current->data.getNumDeRegistro() == vuelo) {
             T data = current->data;
             // Caso de un solo elemento en la lista
             if (length == 1) {
@@ -75,7 +75,7 @@ T CircularDoublyLinkedList<T>::remove(string vuelo) {
         current = current->next;
     } while (current != head);
 
-    throw std::out_of_range("Vuelo no encontrado.");
+    throw std::out_of_range("Vuelo no encontrado.\n");
 }
 
 
@@ -89,7 +89,7 @@ void CircularDoublyLinkedList<T>::Print(){
             current = current->next;
         }
     else 
-        out_of_range("Lista vacia.");
+        out_of_range("Lista vacia.\n");
 }
 
 template <typename T>
