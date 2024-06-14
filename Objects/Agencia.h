@@ -46,7 +46,7 @@ void Agencia::GraficarAvionesDisponibles(){
     file.open("Reporte.dot");
     file << "digraph G {" << endl;
     file << "rankdir=TB;" << endl;
-    file << "node [margin=0, style=filled, fillcolor=beige];" << endl;
+    file << "node [margin=0, style=filled, fillcolor=beige, shape=box];" << endl;
     file << "agencia [label =\"Grafico de todas las estructuras de datos.\"]" << endl;
     file << "labelloc=t;" << endl;
     file << "labeljust=l;" << endl;
